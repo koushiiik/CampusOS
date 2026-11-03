@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+const departmentRoutes = require("./routes/departmentRoutes");
 
 // Middlewares
 app.use(cors());
@@ -23,6 +24,8 @@ app.get("/api/health", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+app.use("/api/admin/departments", departmentRoutes);
 
 module.exports = app;
 
