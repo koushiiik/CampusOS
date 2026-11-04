@@ -185,10 +185,112 @@ const deleteDepartment = async (req, res) => {
   }
 };
 
+// Assign HOD
+const assignHOD = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { facultyId } = req.body;
+
+    if (!mongoose.isValidObjectId(id) ||
+        !mongoose.isValidObjectId(facultyId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid department or faculty ID"
+      });
+    }
+
+    const department = await departmentService.assignHOD(
+      id,
+      facultyId
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "HOD assigned successfully",
+      data: department
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// Get department HOD
+const getDepartmentHOD = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid department ID"
+      });
+    }
+
+    const department = await departmentService.getDepartmentHOD(id);
+
+    if (!department) {
+      return res.status(404).json({
+        success: false,
+        message: "Department not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: department.hod
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// Remove HOD assignment
+const removeHOD = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid department ID"
+      });
+    }
+
+    const department = await departmentService.removeHOD(id);
+
+    if (!department) {
+      return res.status(404).json({
+        success: false,
+        message: "Department not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "HOD assignment removed successfully",
+      data: department
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   createDepartment,
   getDepartments,
   getDepartmentById,
   updateDepartment,
-  deleteDepartment
+  deleteDepartment,
+  assignHOD,
+  getDepartmentHOD,
+  removeHOD
 };

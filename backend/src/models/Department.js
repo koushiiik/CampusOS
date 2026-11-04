@@ -23,6 +23,11 @@ const departmentSchema = new mongoose.Schema(
       trim: true,
       default: ""
     },
+    hod: {
+   type: mongoose.Schema.Types.ObjectId,
+   ref: "Faculty",
+    default: null,
+},
 
     isActive: {
       type: Boolean,
