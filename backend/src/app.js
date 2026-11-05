@@ -4,6 +4,8 @@ const cors = require("cors");
 const app = express();
 const departmentRoutes = require("./routes/departmentRoutes");
 const courseRoutes = require("./routes/courseRoutes");
+const facultyRoutes = require("./routes/facultyRoutes");
+const adminDashboardRoutes = require("./routes/adminDashboardRoutes");
 
 // Middlewares
 app.use(cors());
@@ -28,6 +30,8 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/admin/departments", departmentRoutes);
 app.use("/api/admin/courses", courseRoutes);
+app.use("/api/admin/faculty", facultyRoutes);
+app.use("/api/admin/dashboard", adminDashboardRoutes);
 
 module.exports = app;
 
